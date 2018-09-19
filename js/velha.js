@@ -97,8 +97,7 @@ var Board = function (newBoard, parent) {
 // https://www.w3schools.com/js/js_object_prototypes.asp
 Board.prototype = {
 	getRC: function (row, col) {
-		// console.log("ROW: "+ row + " COL: "+ col);
-		// checa todas as conbinações possivels de x e o
+	//Pega posição linha x coluna do tabuleiro
 		return this._board[row * 3 + col];
 	},
 	setRC: function (row, col, player) {
@@ -106,7 +105,7 @@ Board.prototype = {
 		var temp_bd = this._board.split('');
 		temp_bd[row * 3 + col] = player;
 		this._board = temp_bd.join('');
-
+	//Seta um valor na posição linha x coluna do tabuleiro
 		// console.log("TEMP: "+temp_bd); // (sem tirar virgula)
 		// console.log("Board : "+this._board) // metodo para obter todas as combinações possiveis (depois que tirar virgula)
 	},
@@ -120,6 +119,7 @@ Board.prototype = {
 		return this._board[offset];
 	},
 	play: function (move) {
+		//Realiza uma jogada utilizado o setRC para setar o valor no tabuleiro
 		if (move === undefined) {
 			console.log("Undefined");
 		} else {
@@ -128,6 +128,7 @@ Board.prototype = {
 	},
 	openMoves: function (player) {
 		var moves = [];
+		// função para verificar quantos campos ainda há aberto no tabuleiro
 
 		// Se alguem ganhou o jogo para, porque não tem mais movimento
 		if (this.winning(PLAYER_X) || this.winning(PLAYER_O)) {
@@ -170,7 +171,7 @@ Board.prototype = {
 		return (result > 0);
 	},
 	drawWinning: function (player) {
-
+		//Função que printa na tela o ganhador do jogo
 
 
 		var boardPattern = this.toBin(player);
@@ -266,21 +267,21 @@ Board.prototype = {
 			}
 		}
 
-		// Third cell
+		// Terceira celula
 		if (this.getOff(pattern[2]) == veronica_player) {
-			if (score > 0) { // cell1 and/or cell2 is player
+			if (score > 0) { // celula 1 and/or celula 2 é o jogador
 				score *= 10;
-			} else if (score < 0) { // cell1 and/or cell2 is oppPlayer
+			} else if (score < 0) { //  celula 1 and/or celula 2 é o jogador oponente
 				return 0;
-			} else { // cell1 and cell2 are empty
+			} else { // celula 1 e celula 2 é vazia
 				score = 1;
 			}
 		} else if (this.getOff(pattern[2]) == oppPlayer) {
-			if (score < 0) { // cell1 and/or cell2 is oppPlayer
+			if (score < 0) { // celula 1 and/or celula 2 é o jogador
 				score *= 10;
-			} else if (score > 1) { // cell1 and/or cell2 is player
+			} else if (score > 1) { //  celula 1 and/or celula 2 é o jogador oponente
 				return 0;
-			} else { // cell1 and cell2 are empty
+			} else { // celula 1 e celula 2 é vazia
 				score = -1;
 			}
 		}
@@ -289,6 +290,7 @@ Board.prototype = {
 };
 
 var Move = function (row, col, player) {
+	// construtor do move onde é obtido os valores da linha e coluna e o jogador do momento
 	this.row = row;
 	this.col = col;
 	this.player = player;
@@ -303,14 +305,14 @@ Move.prototype = {
 	}
 };
 
-// Implementation of the recursive "MiniMax" algorithim
-// Code based on psudocode and eplanation found here:
+// Implementação do algoritmo minmax 
+// Pseudocodigo nesse site
 // http://www.ntu.edu.sg/home/ehchua/programming/java/JavaGame_TicTacToe_AI.html
 function miniMax(board, player, alpha, beta) {
 	var moveList = board.openMoves(player);
 	var melhorMovimento = undefined;
 
-	if (moveList.length === 0) { // Game Over
+	if (moveList.length === 0) { // fim de jogo
 		bestScore = board.score();
 	} else {
 		if (player === veronica_player) {
