@@ -433,7 +433,7 @@ function veronicaMove() {
 			console.log("IA Dificil")
 			newMove = miniMax(tabuleiro, veronica_player, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY).move;
 		}
-	} else if (dificuldade == 'impossivel	') {
+	} else if (dificuldade == 'impossivel') {
 		newMove = miniMax(tabuleiro, veronica_player, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY).move;
 	}
 	tabuleiro.play(newMove);
