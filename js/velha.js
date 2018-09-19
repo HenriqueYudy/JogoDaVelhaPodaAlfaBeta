@@ -97,7 +97,7 @@ var Board = function (newBoard, parent) {
 // https://www.w3schools.com/js/js_object_prototypes.asp
 Board.prototype = {
 	getRC: function (row, col) {
-	//Pega posição linha x coluna do tabuleiro
+		//Pega posição linha x coluna do tabuleiro
 		return this._board[row * 3 + col];
 	},
 	setRC: function (row, col, player) {
@@ -105,7 +105,7 @@ Board.prototype = {
 		var temp_bd = this._board.split('');
 		temp_bd[row * 3 + col] = player;
 		this._board = temp_bd.join('');
-	//Seta um valor na posição linha x coluna do tabuleiro
+		//Seta um valor na posição linha x coluna do tabuleiro
 		// console.log("TEMP: "+temp_bd); // (sem tirar virgula)
 		// console.log("Board : "+this._board) // metodo para obter todas as combinações possiveis (depois que tirar virgula)
 	},
@@ -374,11 +374,14 @@ function veronicaMove() {
 			var col = Math.floor(Math.random() * 3);
 			if (tabuleiro.getRC(row, col) === ' ') {
 				newMove = new Move(row, col, veronica_player);
-			} else {
-				var row = Math.floor(Math.random() * 3);
-				var col = Math.floor(Math.random() * 3);
+			}
+
+			var row = Math.floor(Math.random() * 3);
+			var col = Math.floor(Math.random() * 3);
+			if (tabuleiro.getRC(row, col) === ' ') {
 				newMove = new Move(row, col, veronica_player);
 			}
+
 
 		} else {
 			console.log("IA FACIL")
@@ -430,7 +433,7 @@ function veronicaMove() {
 			console.log("IA Dificil")
 			newMove = miniMax(tabuleiro, veronica_player, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY).move;
 		}
-	} else if(dificuldade == 'impossivel	') {
+	} else if (dificuldade == 'impossivel	') {
 		newMove = miniMax(tabuleiro, veronica_player, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY).move;
 	}
 	tabuleiro.play(newMove);
